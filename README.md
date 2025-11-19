@@ -4,7 +4,7 @@
 
 ## Conceived and built by Kranti Konganti, HFP
 
-### Latest version: 0.2.2
+### Latest version: 0.2.3
 
 - Multiple DNA sequence encoders for **NVIDIA GPU-accelerated** training.
 - A weighted Ensemble machine-learning model generation with sensible defaults.
@@ -35,19 +35,15 @@
 
 **StrainFish** <u>**requires**</u> Python 3.12 or newer and **NVIDIA GPU** support for its core machine learning processes.
 
-### Step 1: Install **StrainFish**
+### Step 1: Install **CUDA Toolkit**
 
-First, install the base **StrainFish** package from **PyPI**:
+- First, make sure to note down which version of **CUDA Toolkit** you need to install for your **NVIDIA GPU** [based on the driver version](https://docs.nvidia.com/deploy/cuda-compatibility/minor-version-compatibility.html).
+- Next, [install the **CUDA Toolkit** package from **NVIDIA**](https://developer.nvidia.com/cuda-toolkit-archive) that works with your **NVIDAI GPU** driver version.
+- The `strainfish` package will not be fully functional until proper version of **CUDA Toolkit** is installed.
 
-```bash
-pip install strainfish
-```
+### Step 2: Install `strainfish`
 
-This command installs **StrainFish** but **not** the necessary `cuML` (GPU) libraries. The package will not be fully functional until `cuML` is installed in Step 2.
-
-### Step 2: Install `cuML`
-
-The following commands ensure that the correct `cuML` version, compatible with your CUDA environment, is installed alongside **StrainFish**. You must choose **one** of the following commands based on your system's CUDA version to install the compatible `cuML` library:
+The following commands ensure that the correct `cuML` version, compatible with your CUDA environment, is installed alongside **StrainFish**. You must choose **one** of the following commands based on your system's **CUDA** version to install the compatible `cuML` library:
 
 - **For systems with CUDA 12.x:**
 
@@ -55,7 +51,7 @@ The following commands ensure that the correct `cuML` version, compatible with y
     pip install strainfish[cuda-12]
     ```
 
-- **For systems with CUDA 13.x:**
+- **For systems with CUDA 13.x: (only works with Python version 3.13.x)**
 
     ```bash
     pip install strainfish[cuda-13]
