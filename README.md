@@ -1,10 +1,10 @@
-# StrainFish
+# **StrainFish**
 
 `strainfish` is a weighted ensemble machine learning algorithm with multiple DNA sequence encoders and logic, specifically designed for classification of marker sequences.
 
 ## Conceived and built by Kranti Konganti, HFP
 
-### v0.2.1
+### Latest version: 0.2.2
 
 - Multiple DNA sequence encoders for **NVIDIA GPU-accelerated** training.
 - A weighted Ensemble machine-learning model generation with sensible defaults.
@@ -33,11 +33,43 @@
 
 ## Installation
 
-**StrainFish** requires Python 3.11+ and can be installed via `pip`:
+**StrainFish** <u>**requires**</u> Python 3.12 or newer and **NVIDIA GPU** support for its core machine learning processes.
+
+### Step 1: Install **StrainFish**
+
+First, install the base **StrainFish** package from **PyPI**:
 
 ```bash
 pip install strainfish
 ```
+
+This command installs **StrainFish** but **not** the necessary `cuML` (GPU) libraries. The package will not be fully functional until `cuML` is installed in Step 2.
+
+### Step 2: Install `cuML`
+
+The following commands ensure that the correct `cuML` version, compatible with your CUDA environment, is installed alongside **StrainFish**. You must choose **one** of the following commands based on your system's CUDA version to install the compatible `cuML` library:
+
+- **For systems with CUDA 12.x:**
+
+    ```bash
+    pip install strainfish[cuda-12]
+    ```
+
+- **For systems with CUDA 13.x:**
+
+    ```bash
+    pip install strainfish[cuda-13]
+    ```
+
+### Verify `cuML` and CUDA Installation
+
+After completing Step 2, verify that `cuML` can access the NVIDIA GPU. The following command uses the `nvidia-ml-py` dependency (included with **StrainFish**) to query the driver.
+
+```bash
+python -c "import pynvml; pynvml.nvmlInit(); print('\nNVIDIA CUDA driver version:', f'{pynvml.nvmlSystemGetCudaDriverVersion() // 1000}.{(pynvml.nvmlSystemGetCudaDriverVersion() % 100) // 10}'); pynvml.nvmlShutdown();"
+```
+
+This should output the CUDA version (e.g., `12.4`) supported by your installed NVIDIA driver. Ensure this matches or is higher than the CUDA version required by your chosen `cuML` package.
 
 ## Quick Start
 
@@ -213,13 +245,13 @@ strainfish predict run \
 
 **StrainFish** has the following main dependencies:
 
-- **Core ML Libraries**: numpy, pandas, scikit-learn, xgboost, cuml (GPU-accelerated)
+- **Core ML Libraries (GPU-accelerated)**: numpy, pandas, scikit-learn, xgboost, `cuML` (mandatory for functionality)
 - **Sequence Processing**: biopython, sourmash, sentencepiece
 - **CLI Interface**: rich, rich-click
 - **Utilities**: joblib, psutil, humanize, pynvml
 - **Testing**: pytest, pytest-cov
 
-For a complete list of dependencies, see `pyproject.toml`.
+**Note on `cuML`:** The `cuML` library is essential for **StrainFish**'s GPU-accelerated computations. It must be installed explicitly as an extra (e.g., `strainfish[cuml-cu12]`) during the `pip install` command after the base package installation. For a complete and version-specific list of all dependencies, including those for `cuML`, see `pyproject.toml`.
 
 ## License
 
